@@ -67,7 +67,7 @@ group :development, :test do
   gem 'byebug'
   gem 'rspec-rails'
   # Fixtures replacement
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   # Fake data generator for FactoryGirl
   gem 'faker'
   # RSpec single line tests
