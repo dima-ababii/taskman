@@ -5,6 +5,9 @@ ruby '2.3.3'
 # Ruby on Rails
 gem 'rails', '5.1.6'
 
+# Turbolinks
+gem 'turbolinks'
+
 # Use PostgreSQL as the database for Active Record
 gem 'pg'
 
