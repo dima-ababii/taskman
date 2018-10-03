@@ -1,0 +1,16 @@
+h1 Users
+
+table
+  thead
+    th ID
+    th Email
+    th Actions
+  tbody
+    - @users.each do |user|
+      tr
+        td
+          = user.id
+        td
+          = user.email
+        td
+          = link_to 'Show', user

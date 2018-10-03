@@ -5,6 +5,9 @@ ruby '2.3.3'
 # Ruby on Rails
 gem 'rails', '5.1.6'
 
+# Turbolinks
+gem 'turbolinks'
+
 # Use PostgreSQL as the database for Active Record
 gem 'pg'
 
@@ -67,7 +70,7 @@ group :development, :test do
   gem 'byebug'
   gem 'rspec-rails'
   # Fixtures replacement
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   # Fake data generator for FactoryGirl
   gem 'faker'
   # RSpec single line tests
