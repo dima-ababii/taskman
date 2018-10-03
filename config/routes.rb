@@ -4,5 +4,7 @@ Rails.application.routes.draw do
   
   # Routes
   devise_for :users
+  
+  resources :tasks
   resources :users
 end
