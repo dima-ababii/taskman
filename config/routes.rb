@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # Set Default start page
-  root to: 'users#index'
+  root to: 'tasks#index'
   
   # Routes
   devise_for :users
