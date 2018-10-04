@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181003083540) do
+ActiveRecord::Schema.define(version: 20181004092853) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,11 +20,19 @@ ActiveRecord::Schema.define(version: 20181003083540) do
     t.string "file"
     t.string "file_hex"
     t.string "title", null: false
-    t.string "state", default: "new", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["state"], name: "index_tasks_on_state"
     t.index ["title"], name: "index_tasks_on_title"
+  end
+
+  create_table "tasks_users", force: :cascade do |t|
+    t.string "state", default: "new", null: false
+    t.integer "task_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id", "user_id"], name: "index_tasks_users_on_task_id_and_user_id", unique: true
+    t.index ["task_id"], name: "index_tasks_users_on_task_id"
   end
 
   create_table "users", force: :cascade do |t|
