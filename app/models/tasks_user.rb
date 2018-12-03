@@ -5,7 +5,8 @@ class TasksUser < ApplicationRecord
   # Callbacks
   
   # Associations
-  has_and_belongs_to_many :users
+  belongs_to :task
+  belongs_to :user
   
   # Associations validations
   validates :task, presence: true
