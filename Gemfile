@@ -5,9 +5,6 @@ ruby '2.5.3'
 # Ruby on Rails
 gem 'rails', '5.2'
 
-# Turbolinks
-gem 'turbolinks'
-
 # Use PostgreSQL as the database for Active Record
 gem 'pg'
 
@@ -27,11 +24,10 @@ gem 'attr_encrypted', '3.1.0'
 gem 'kaminari'
 
 # CSS
+gem 'bootstrap'
 gem 'bootstrap-sass'
-gem 'sass-rails'
 
 # JavaScript
-gem 'coffee-rails' # use CoffeeScript
 gem 'jquery-rails' # main JS library
 gem 'jquery-ui-rails' # jQuery UI
 gem 'uglifier' # compressor
@@ -52,9 +48,6 @@ gem 'figaro'
 
 # Meta Tags
 gem 'meta-tags'
-
-# File uploading
-gem 'carrierwave'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
