@@ -5,14 +5,22 @@
       ul
         - @task.errors.full_messages.each do |message|
           li = message
-
-  .field
+          
+  .form-group
     = f.label :title
-    = f.text_field :title
-  .field
+    = f.text_field :title, { class: 'form-control' }
+  
+  .form-group
     = f.label :description
-    = f.text_area :description
-  .field
-    = f.label :file
-    = f.text_field :file
+    = f.text_area :description, { class: 'form-control' }
+    
+  .form-group
+    = f.file_field :file
+    
+  .form-group
+    = f.label :assign_users
+    = f.select :user_ids, User.all.map { |user| ["#{user.last_name} #{user.first_name}", user.id] }, { include_blank: true }, { multiple: true, class: 'chosen-select' }
+  
   .actions = f.submit
+  
+  => link_to 'Back', tasks_path

@@ -12,5 +12,19 @@
 //
 //= require jquery
 //= require rails-ujs
+//= require chosen-jquery
 //= require bootstrap-sprockets
 //= require_tree .
+
+$(document).ready(function() {
+  chosenSelect();
+  
+  // Selector
+  function chosenSelect() {
+    $('.chosen-select').chosen({
+      allow_single_deselect: true,
+      no_results_text: 'No results matched',
+      width: '100%'
+    })
+  }
+});

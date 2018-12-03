@@ -1,15 +1,18 @@
-p#notice = notice
-
-p
-  strong Title:
-  = @task.title
-p
-  strong Description:
-  = @task.description
-p
-  strong File:
-  = @task.file
-
-=> link_to 'Edit', edit_task_path(@task)
-'|
-=< link_to 'Back', tasks_path
+.container-fluid
+  .row
+    .col-lg-6.offset-lg-3
+      p
+        strong Title:
+        '
+        = @task.title
+      p
+        strong Description:
+        '
+        = @task.description
+      p
+        strong File:
+        '
+        - if @task.file_name
+          = link_to @task.file_name, download_task_path(@task)
+          
+      => link_to 'Back', tasks_path

@@ -1,16 +1,28 @@
-h1 Users
-
-table
-  thead
-    th ID
-    th Email
-    th Actions
-  tbody
-    - @users.each do |user|
-      tr
-        td
-          = user.id
-        td
-          = user.email
-        td
-          = link_to 'Show', user
+.container-fluid
+  .row
+    .col-lg-12
+      h2
+        | Users
+        '
+      table.table.table-sm.table-striped.table-bordereds
+        thead
+          tr
+            th Email
+            th Name
+            th Actions
+            th Tasks
+            
+        tbody
+          - @users.each do |user|
+            tr
+              td = user.email
+              td = "#{user.last_name} #{user.first_name}"
+              
+              td
+                = link_to 'Show', user
+                '
+              td
+              // Show progress for each task + add view
+                - user.tasks.each do |task|
+                  = link_to task.title, task_path(task)
+                  '

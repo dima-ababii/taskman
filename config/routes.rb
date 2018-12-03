@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   
   devise_for :users
   
-  resources :tasks
+  resources :tasks do
+    member do
+      get :download
+    end
+  end
   resources :users
 end

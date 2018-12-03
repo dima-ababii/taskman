@@ -32,6 +32,7 @@ gem 'jquery-rails' # main JS library
 gem 'jquery-ui-rails' # jQuery UI
 gem 'uglifier' # compressor
 gem 'typedjq-rails' # typewriter based on JQuery library
+gem 'chosen-rails' # Form selecter
 
 # HTML template engine
 gem 'slim-rails'

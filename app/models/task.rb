@@ -1,11 +1,18 @@
 class Task < ApplicationRecord
+  # Uploader
+  mount_uploader :file, TaskUploader
+  
   # Associations
   has_and_belongs_to_many :users
   
   # Fields validations
   validates :title, presence: true, uniqueness: true
   
-  def assign_task_to_user(user_id)
-    TasksUser.create(task: self, user_id: user_id)
+  def file_name
+    begin
+      File.basename(self.file&.url)
+    rescue
+      nil
+    end
   end
 end
