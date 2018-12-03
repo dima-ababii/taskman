@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-ruby '2.3.3'
+ruby '2.5.3'
 
 # Ruby on Rails
-gem 'rails', '5.1.6'
+gem 'rails', '5.2'
 
 # Turbolinks
 gem 'turbolinks'

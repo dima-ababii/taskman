@@ -1,10 +1,7 @@
 class Task < ApplicationRecord
-  # Callbacks
-  
   # Associations
-  
-  # Associations validations
+  has_and_belongs_to_many :tasks
   
   # Fields validations
-  validates :title, presence: true
+  validates :title, presence: true, uniqueness: true
 end
