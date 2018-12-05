@@ -11,7 +11,9 @@ Rails.application.routes.draw do
   
   resources :tasks do
     member do
+      get :assign
       get :download
+      get :unassign
     end
   end
   resources :users

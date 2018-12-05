@@ -5,7 +5,9 @@ class User < ApplicationRecord
   # Callbacks
   
   # Associations
-  has_and_belongs_to_many :tasks
+  has_many :tasks_users, dependent: :destroy
+  has_many :tasks, through: :tasks_users
+  # has_and_belongs_to_many :tasks
   
   # Fields validations
   validates :email, presence: true, uniqueness: true

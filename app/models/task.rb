@@ -3,7 +3,8 @@ class Task < ApplicationRecord
   mount_uploader :file, TaskUploader
   
   # Associations
-  has_and_belongs_to_many :users
+  has_many :tasks_users, dependent: :destroy
+  has_many :users, through: :tasks_users
   
   # Fields validations
   validates :title, presence: true, uniqueness: true

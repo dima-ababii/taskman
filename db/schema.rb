@@ -29,10 +29,12 @@ ActiveRecord::Schema.define(version: 2018_10_04_092853) do
     t.string "state", default: "new", null: false
     t.integer "task_id", null: false
     t.integer "user_id", null: false
+    t.datetime "assigned_at"
+    t.datetime "unassigned_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["task_id", "user_id"], name: "index_tasks_users_on_task_id_and_user_id", unique: true
     t.index ["task_id"], name: "index_tasks_users_on_task_id"
+    t.index ["user_id"], name: "index_tasks_users_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

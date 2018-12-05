@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy, :download]
+  before_action :set_task, only: [:show, :edit, :update, :destroy, :assign, :deassign, :download]
   
   # GET /tasks
   def index
@@ -8,6 +8,11 @@ class TasksController < ApplicationController
   
   # GET /tasks/:id
   def show
+    is_assign = TasksUser.find_by(task: @task, user: current_user, unassigned_at: nil)
+    @data = {
+      task: @task,
+      is_assign: is_assign
+    }
   end
   
   # GET /tasks/new
@@ -22,8 +27,21 @@ class TasksController < ApplicationController
   
   # POST /tasks
   def create
-    @task = Task.new(task_params)
+    # Delete user_ids from task params
+    params = task_params
+    params.delete(:user_ids)
+    
+    @task = Task.new(params)
     if @task.save
+      flash[:notice] = "#{@task.title} task was created"
+      # Assign created Task to Users
+      task_params[:user_ids].each do |user_id|
+        existing_task_for_user = TasksUser.where(task: @task, user_id: user_id).where.not(unassigned_at: nil).first
+        next if existing_task_for_user
+        
+        # Create Assosiation
+        TasksUser.create(task: @task, user_id: user_id)
+      end
       # assign_task
       redirect_to tasks_path
     else
@@ -44,6 +62,44 @@ class TasksController < ApplicationController
   # DELETE /tasks/:id
   def destroy
     @task.destroy
+    redirect_to tasks_path
+  end
+  
+  # GET /task/:id/assign
+  def assign
+    unassigned_tasks_user = TasksUser.find_by(task: @task, user: current_user, unassigned_at: nil)
+    if unassigned_tasks_user
+      flash[:alert] = "Task can not be assigned"
+      redirect_to tasks_path
+      return
+    end
+    
+    task_user = TasksUser.new(task_id: params[:id], user: current_user)
+    if task_user.save
+      flash[:notice] = "#{task_user.task.title} task was assigned"
+    else
+      flash[:notice] = "#{task_user.task.errors.full_messages}"
+    end
+    redirect_to tasks_path
+  end
+  
+  # GET /task/:id/unassign
+  def unassign
+    task_user = TasksUser.find_by(task_id: params[:id], user: current_user, unassigned_at: nil)
+    
+    if task_user.nil?
+      flash[:alert] = "Task can not be unassigned"
+      redirect_to tasks_path
+      return
+    end
+    
+    task_user.unassigned_at = DateTime.current
+    if task_user.save
+      flash[:notice] = "#{task_user.task.title} task was unassigned"
+    else
+      flash[:alert] = "#{task_user.task.errors.full_messages}"
+    end
+    
     redirect_to tasks_path
   end
   
