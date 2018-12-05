@@ -15,6 +15,10 @@ Rails.application.routes.draw do
       get :download
       get :unassign
     end
+    
+    collection do
+      post ':id/change_state/:state', to: 'tasks#change_state', as: :change_state
+    end
   end
   resources :users
 end

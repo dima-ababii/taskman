@@ -8,10 +8,11 @@ class TasksController < ApplicationController
   
   # GET /tasks/:id
   def show
-    is_assign = TasksUser.find_by(task: @task, user: current_user, unassigned_at: nil)
+    current_assignment = TasksUser.find_by(task: @task, user: current_user, unassigned_at: nil)
     @data = {
       task: @task,
-      is_assign: is_assign
+      is_assign: current_assignment,
+      curret_state: current_assignment&.state
     }
   end
   
@@ -105,8 +106,9 @@ class TasksController < ApplicationController
   
   # POST /tasks/:id/change_state/:state
   def change_state
-    task_user = TasksUser.find_by(task_id: params[:id], user: current_user)
+    task_user = TasksUser.find_by(task_id: params[:id], user: current_user, unassigned_at: nil)
     task_user.update(state: params[:state])
+    flash[:notice] = "State #{params[:state]}"
     redirect_to tasks_path
   end
   
