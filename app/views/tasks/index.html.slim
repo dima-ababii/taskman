@@ -19,7 +19,7 @@
             tr
               td = link_to task.title, task
               td
-                - if task&.description.length > 40
+                - if task&.description && task&.description.length > 40
                   = task&.description[0..40] + '...'
                 - else
                   = task&.description
@@ -29,3 +29,6 @@
                   = link_to 'Edit', edit_task_path(task)
                   '
                   = link_to 'Destroy', task, data: { confirm: 'Are you sure?' }, method: :delete
+                  
+      .page-navigation
+        = paginate @tasks

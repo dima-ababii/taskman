@@ -8,7 +8,13 @@ class TasksController < ApplicationController
   
   # GET /tasks
   def index
-    @tasks = Task.all
+    if params[:page]
+      page_number = params[:page]
+    else
+      page_number = 1
+    end
+    
+    @tasks = Task.all.order(updated_at: :desc).page(page_number)
   end
   
   # GET /tasks/:id
