@@ -3,6 +3,7 @@ class Task < ApplicationRecord
   mount_uploader :file, TaskUploader
   
   # Associations
+  has_many :task_results, dependent: :destroy
   has_many :tasks_users, dependent: :destroy
   has_many :users, through: :tasks_users
   

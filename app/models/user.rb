@@ -9,7 +9,7 @@ class User < ApplicationRecord
   # Associations
   has_many :tasks_users, dependent: :destroy
   has_many :tasks, through: :tasks_users
-  # has_and_belongs_to_many :tasks
+  has_many :task_results, dependent: :destroy
   
   # Fields validations
   validates :email, presence: true, uniqueness: true
