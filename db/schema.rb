@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_06_130042) do
+ActiveRecord::Schema.define(version: 2018_12_06_133604) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,16 @@ ActiveRecord::Schema.define(version: 2018_12_06_130042) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
+  end
+
+  create_table "task_results", force: :cascade do |t|
+    t.string "file"
+    t.string "file_hex"
+    t.text "description"
+    t.integer "user_id", null: false
+    t.integer "task_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "task_settings", force: :cascade do |t|
@@ -45,6 +55,7 @@ ActiveRecord::Schema.define(version: 2018_12_06_130042) do
     t.integer "user_id", null: false
     t.datetime "assigned_at"
     t.datetime "unassigned_at"
+    t.date "expiration_date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["task_id"], name: "index_tasks_users_on_task_id"
@@ -57,6 +68,7 @@ ActiveRecord::Schema.define(version: 2018_12_06_130042) do
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "role", default: "student", null: false
+    t.boolean "is_active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
