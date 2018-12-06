@@ -4,14 +4,15 @@
       h2
         | Tasks
         '
-        = link_to 'new', new_task_path
+        = link_to 'new', new_task_path if can? :create, @tasks
         
       table.table.table-sm.table-striped.table-bordereds
         thead
           tr
             th Title
             th Description
-            th Actions
+            - if can? :manage, @tasks
+              th Actions
             
         tbody
           - @tasks.each do |task|
@@ -24,6 +25,7 @@
                   = task&.description
               
               td
-                = link_to 'Edit', edit_task_path(task)
-                '
-                = link_to 'Destroy', task, data: { confirm: 'Are you sure?' }, method: :delete
+                - if can? :manage, @tasks
+                  = link_to 'Edit', edit_task_path(task)
+                  '
+                  = link_to 'Destroy', task, data: { confirm: 'Are you sure?' }, method: :delete

@@ -3,7 +3,11 @@ class UsersController < ApplicationController
   
   # GET /users
   def index
-    @users = User.all
+    if current_user.role == 'teacher'
+      @users = User.all
+    else
+      @users = User.where(id: current_user.id)
+    end
   end
   
   # GET /users/:id
