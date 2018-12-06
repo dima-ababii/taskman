@@ -6,6 +6,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.string :first_name, null: false
       t.string :last_name, null: false
       t.string :role, null: false, default: 'student'
+      t.boolean :is_active, default: true
       t.timestamps null: false
     end
     
