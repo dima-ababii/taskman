@@ -18,6 +18,10 @@
           = f.text_area :description, { class: 'form-control' }
           
         .form-group
+          = f.label :description
+          = f.date_field :expiration_date, { class: 'form-control' }
+          
+        .form-group
           = f.file_field :file
         
         .actions = f.submit

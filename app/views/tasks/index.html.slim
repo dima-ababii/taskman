@@ -14,21 +14,26 @@
             - if can? :manage, @tasks
               th Actions
             
+            th Expiration Date
+            
         tbody
           - @tasks.each do |task|
             tr
               td = link_to task.title, task
               td
-                - if task&.description && task&.description.length > 40
-                  = task&.description[0..40] + '...'
+                - if task.description && task.description.length > 40
+                  = task.description[0..40] + '...'
                 - else
-                  = task&.description
+                  = task.description
               
               td
                 - if can? :manage, @tasks
                   = link_to 'Edit', edit_task_path(task)
                   '
                   = link_to 'Destroy', task, data: { confirm: 'Are you sure?' }, method: :delete
+                  
+              td
+                = task.expiration_date
                   
       .page-navigation
         = paginate @tasks
