@@ -1,4 +1,9 @@
 class TasksController < ApplicationController
+  # Authorization
+  load_and_authorize_resource
+  skip_authorize_resource only: [:assign, :unassign, :download, :change_state]
+  
+  # Set Task
   before_action :set_task, only: [:show, :edit, :update, :destroy, :assign, :deassign, :download]
   
   # GET /tasks
@@ -23,7 +28,7 @@ class TasksController < ApplicationController
   
   # GET /tasks/edit/:id
   def edit
-    
+  
   end
   
   # POST /tasks
@@ -108,14 +113,22 @@ class TasksController < ApplicationController
   def change_state
     task_user = TasksUser.find_by(task_id: params[:id], user: current_user, unassigned_at: nil)
     task_user.update(state: params[:state])
+    
     flash[:notice] = "State #{params[:state]}"
+    
     redirect_to tasks_path
   end
   
   # GET /tasks/:id/download
   def download
     file_path = @task.file&.url
-    # notice if file_path nil
+    
+    if file_path.nil?
+      flash[:alert] = "There is no attachments for this task"
+      redirect_to task_path(@task)
+      return
+    end
+    
     send_file( file_path, filename: @task.file_name)
   end
   

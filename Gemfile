@@ -17,6 +17,9 @@ gem 'activeadmin', '1.3.0'
 # Use Devise for AdminUser authentication
 gem 'devise'
 
+# Authorization
+gem 'cancancan'
+
 # Attributes encryption (be carefull with updates)
 gem 'attr_encrypted', '3.1.0'
 

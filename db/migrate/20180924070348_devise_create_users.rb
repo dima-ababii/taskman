@@ -5,6 +5,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.string :encrypted_password, default: "", null: false
       t.string :first_name, null: false
       t.string :last_name, null: false
+      t.string :role, null: false, default: 'student'
       t.timestamps null: false
     end
     

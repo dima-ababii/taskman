@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2018_10_04_092853) do
     t.string "encrypted_password", default: "", null: false
     t.string "first_name", null: false
     t.string "last_name", null: false
+    t.string "role", default: "student", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
