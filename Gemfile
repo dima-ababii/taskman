@@ -12,7 +12,7 @@ gem 'pg'
 gem 'puma'
 
 # Admin panel
-gem 'activeadmin', '1.3.0'
+gem 'activeadmin'
 
 # Use Devise for AdminUser authentication
 gem 'devise'
