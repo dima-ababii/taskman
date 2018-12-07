@@ -20,11 +20,16 @@ class TasksController < ApplicationController
   # GET /tasks/:id
   def show
     current_assignment = TasksUser.find_by(task: @task, user: current_user, unassigned_at: nil)
+    
+    assignment_user_ids = TasksUser.where(task: @task, unassigned_at: nil).pluck(:user_id)
+    assign_users = User.where(id: assignment_user_ids)
+    
     @data = {
       task: @task,
-      is_assign: current_assignment,
+      is_assign: current_assignment.present?,
       curret_state: current_assignment&.state,
-      current_user: current_user
+      current_user: current_user,
+      assign_users: assign_users
     }
   end
   
@@ -117,12 +122,14 @@ class TasksController < ApplicationController
   
   # POST /tasks/:id/change_state/:state
   def change_state
-    task_user = TasksUser.find_by(task_id: params[:id], user: current_user, unassigned_at: nil)
-    task_user.update(state: params[:state])
+    state_param = params[:state]
+    task_param = params[:id]
     
-    flash[:notice] = "State #{params[:state]}"
+    task_user = TasksUser.find_by(task_id: task_param, user: current_user, unassigned_at: nil)
+    task_user.update(state: state_param)
     
-    redirect_to tasks_path
+    flash[:notice] = "State #{state_param}"
+    redirect_to task_path(task_param)
   end
   
   # GET /tasks/:id/download

@@ -1,6 +1,8 @@
 .container-fluid
   .row
     .col-lg-6.offset-lg-3
+      => link_to 'Back', tasks_path
+      
       p
         strong Title:
         '
@@ -44,6 +46,22 @@
           - else
             = link_to 'Edit answer', edit_task_result_path(existing_task_result)
             = link_to 'Show answer', task_result_path(existing_task_result)
-          '
-          
-      => link_to 'Back', tasks_path
+            
+      h3
+        | Assigned Users
+        '
+      table.table.table-sm.table-striped.table-bordereds
+        thead
+          tr
+            th Email
+            th Name
+            th State
+            
+        tbody
+          - @data[:assign_users].each do |user|
+            tr
+              td = user.email
+              td = "#{user.last_name} #{user.first_name}"
+              td
+                - assigned_task = TasksUser.find_by(user: user, task: @data[:task], unassigned_at: nil)
+                = assigned_task&.state
