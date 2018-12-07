@@ -29,15 +29,16 @@ class UsersController < ApplicationController
     
     if user && user != current_user
       flash[:alert] = "Permission denied"
-      redirect_to users_path
+      redirect_to user_path(user)
     end
     
     if user.is_active
       user.update_columns(is_active: false)
-      flash[:notice] = "Your account is active"
+      flash[:notice] = "Your account is deactivated"
     else
       user.update_columns(is_active: true)
-      flash[:notice] = "Your account is deactive"
+      flash[:notice] = "Your account is activated"
     end
+    redirect_to user_path(user)
   end
 end

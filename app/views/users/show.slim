@@ -3,4 +3,12 @@
     .col-lg-6.offset-lg-3
       p Email: #{@user.email}
       p Name: #{@user.last_name} #{@user.first_name}
+      
+      - if @user.is_active
+        - activity_title = 'Dectivate'
+      - else
+        - activity_title = 'Activate'
+      
+      => link_to activity_title, activation_user_path(@user), method: :post
+      
       => link_to 'Back', users_path
