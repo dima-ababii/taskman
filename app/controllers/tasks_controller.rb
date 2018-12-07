@@ -23,7 +23,8 @@ class TasksController < ApplicationController
     @data = {
       task: @task,
       is_assign: current_assignment,
-      curret_state: current_assignment&.state
+      curret_state: current_assignment&.state,
+      current_user: current_user
     }
   end
   
@@ -64,7 +65,6 @@ class TasksController < ApplicationController
   # PUT/PATCH /tasks/:id
   def update
     if @task.update(task_params)
-      # assign_task
       redirect_to @task
     else
       render 'edit'
@@ -135,7 +135,7 @@ class TasksController < ApplicationController
       return
     end
     
-    send_file( file_path, filename: @task.file_name)
+    send_file(file_path, filename: @task.file_name)
   end
   
   private

@@ -2,38 +2,13 @@
   .row
     .col-lg-6.offset-lg-3
       p
-        strong Title:
-        '
-        = @data[:task].title
-      p
         strong Description:
         '
-        = @data[:task].description
+        = @task_result.description
       p
         strong File:
         '
-        - if @data[:task].file_name
-          = link_to @data[:task].file_name, download_task_path(@data[:task])
+        - if @task_result.file_name
+          = link_to @task_result.file_name, download_task_result_path(@task_result)
           
-      p
-        - if @data[:is_assign]
-          = link_to 'Unassign', unassign_task_path(@data[:task])
-        - else
-          = link_to 'Assign', assign_task_path(@data[:task])
-      
-      - if @data[:is_assign]
-        p
-          strong Show current state:
-          '
-          = @data[:curret_state]
-      
-        p
-          strong States:
-          '
-          = link_to 'New', change_state_tasks_path(@data[:task], 'new'), method: :post
-          '
-          = link_to 'In Progress', change_state_tasks_path(@data[:task], 'in_progress'), method: :post
-          '
-          = link_to 'Finished', change_state_tasks_path(@data[:task], 'finished'), method: :post
-          
-      => link_to 'Back', tasks_path
+      => link_to 'Back', task_results_path

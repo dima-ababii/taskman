@@ -16,9 +16,11 @@
           - @task_results.each do |task_result|
             tr
               td = link_to "#{task_result.user.last_name} #{task_result.user.first_name}", user_path(task_result.user)
-              td = link_to task_result.task.title, task_result_path(task_result.task)
+              td = link_to task_result.task.title, task_path(task_result.task)
               
               td
+                  = link_to 'Show', task_result_path(task_result)
+                  '
                   = link_to 'Edit', edit_task_result_path(task_result)
                   '
                   = link_to 'Destroy', task_result, data: { confirm: 'Are you sure?' }, method: :delete

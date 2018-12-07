@@ -2,7 +2,7 @@ class TaskResultsController < ApplicationController
   # Authorization
   
   # Set Task
-  before_action :set_task_result, only: [:show, :edit, :update, :destroy]
+  before_action :set_task_result, only: [:show, :edit, :update, :destroy, :download]
   
   # GET /task_results
   def index
@@ -17,7 +17,7 @@ class TaskResultsController < ApplicationController
   
   # GET /task_results/:id
   def show
-    
+  
   end
   
   # GET /task_results/new
@@ -27,30 +27,54 @@ class TaskResultsController < ApplicationController
   
   # GET /task_results/edit/:id
   def edit
-  
+    
   end
   
   # POST /task_results/:task_id
   def create
-    @task_result = Task.new(task_result_params)
-    @task_result
+    @task_result = TaskResult.new(task_result_params)
+    task = Task.find_by(id: params[:task_id])
+    
+    if task.nil?
+      # error
+    end
+    
+    @task_result.task = task
+    @task_result.user = current_user
     if @task_result.save
-      
+      redirect_to tasks_path(params[:task_id])
     else
-      
+      render 'new', task_id: params[:task_id]
     end
   end
   
   # PUT/PATCH /task_results/:id
   def update
-    
+    if @task_result.update(task_result_params)
+      redirect_to @task_result.task
+    else
+      render 'edit'
+    end
   end
   
   # DELETE /task_results/:id
   def destroy
-  
+    @task_result.destroy
+    redirect_to task_results_path
   end
   
+  # GET /task_results/:id/download
+  def download
+    file_path = @task_result.file&.url
+    
+    if file_path.nil?
+      flash[:alert] = "There is no attachments for this task"
+      redirect_to task_result_path(@task_result)
+      return
+    end
+    
+    send_file(file_path, filename: @task_result.file_name)
+  end
   
   private
     def set_task_result

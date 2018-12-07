@@ -26,7 +26,7 @@
           strong Show current state:
           '
           = @data[:curret_state]
-      
+          
         p
           strong States:
           '
@@ -35,5 +35,15 @@
           = link_to 'In Progress', change_state_tasks_path(@data[:task], 'in_progress'), method: :post
           '
           = link_to 'Finished', change_state_tasks_path(@data[:task], 'finished'), method: :post
+          
+        p
+          '
+          - existing_task_result = TaskResult.find_by(user: @data[:current_user], task: @data[:task])
+          - if existing_task_result.nil?
+            = link_to 'Create new answer', new_task_result_path(task_id: @data[:task].id)
+          - else
+            = link_to 'Edit answer', edit_task_result_path(existing_task_result)
+            = link_to 'Show answer', task_result_path(existing_task_result)
+          '
           
       => link_to 'Back', tasks_path

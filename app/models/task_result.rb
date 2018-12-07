@@ -11,12 +11,21 @@ class TaskResult < ApplicationRecord
   validates :user, presence: true
   
   # Fields validations
-  validates :description, presence: true, if: -> { description }
-  validates :file, presence: true, if: -> { file }
   validate :presence_of_answer
+  
+  def file_name
+    begin
+      File.basename(self.file&.url)
+    rescue
+      nil
+    end
+  end
   
   private
     def presence_of_answer
-      errors.add(:base, 'Description or File must be present') if description.nil? && file.nil?
+      return if description.length == 0 && !file&.url.nil?
+      return if description.length > 0 && file&.url.nil?
+      return if description.length > 0 && !file&.url.nil?
+      errors.add(:base, 'Description or File must be present')
     end
 end

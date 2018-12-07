@@ -28,6 +28,10 @@ Rails.application.routes.draw do
     collection do
       post ':task_id', to: 'task_results#create', as: :create
     end
+    
+    member do
+      get :download
+    end
   end
   
   resources :users do
