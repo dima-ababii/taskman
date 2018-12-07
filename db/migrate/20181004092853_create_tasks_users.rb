@@ -6,7 +6,6 @@ class CreateTasksUsers < ActiveRecord::Migration[5.1]
       t.integer :user_id, null: false
       t.datetime :assigned_at
       t.datetime :unassigned_at
-      t.date :expiration_date, null: false
       t.timestamps
       t.index :task_id
       t.index :user_id

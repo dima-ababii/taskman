@@ -11,4 +11,6 @@
           = link_to 'Tasks', tasks_path, class: 'nav-link'
         li.nav-item
           = link_to 'Users', users_path, class: 'nav-link'
+        li.nav-item
+          = link_to 'Results', task_results_path, class: 'nav-link'
       = link_to 'Log Out', destroy_user_session_path, method: :delete

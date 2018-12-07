@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 2018_12_06_133604) do
     t.string "file"
     t.string "file_hex"
     t.string "title", null: false
+    t.date "expiration_date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["title"], name: "index_tasks_on_title", unique: true
@@ -55,7 +56,6 @@ ActiveRecord::Schema.define(version: 2018_12_06_133604) do
     t.integer "user_id", null: false
     t.datetime "assigned_at"
     t.datetime "unassigned_at"
-    t.date "expiration_date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["task_id"], name: "index_tasks_users_on_task_id"

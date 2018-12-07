@@ -18,8 +18,8 @@
           = f.text_area :description, { class: 'form-control' }
         
         .form-group
-          = f.label :description
-          = f.date_time :expiration_date, { class: 'form-control' }
+          = f.label :expiration_date
+          = f.date_field :expiration_date, { class: 'form-control' }
           
         .form-group
           = f.file_field :file

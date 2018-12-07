@@ -23,5 +23,12 @@ Rails.application.routes.draw do
       post ':id/change_state/:state', to: 'tasks#change_state', as: :change_state
     end
   end
+  
+  resources :task_results, only: [:index, :show, :new, :edit, :update, :destroy] do
+    collection do
+      post ':task_id', to: 'task_results#create', as: :create
+    end
+  end
+  
   resources :users
 end
