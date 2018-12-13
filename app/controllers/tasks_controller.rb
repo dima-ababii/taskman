@@ -91,18 +91,18 @@ class TasksController < ApplicationController
       return
     end
     
-    task_user = TasksUser.new(task_id: params[:id], user: current_user)
+    task_user = TasksUser.new(task: @task, user: current_user)
     if task_user.save
-      flash[:notice] = "#{task_user.task.title} task was assigned"
+      flash[:notice] = "#{@task.title} task was assigned"
     else
-      flash[:notice] = "#{task_user.task.errors.full_messages}"
+      flash[:notice] = "#{@task.errors.full_messages}"
     end
-    redirect_to tasks_path
+    redirect_to task_path(@task)
   end
   
   # GET /task/:id/unassign
   def unassign
-    task_user = TasksUser.find_by(task_id: params[:id], user: current_user, unassigned_at: nil)
+    task_user = TasksUser.find_by(task: @task, user: current_user, unassigned_at: nil)
     
     if task_user.nil?
       flash[:alert] = "Task can not be unassigned"
@@ -112,12 +112,12 @@ class TasksController < ApplicationController
     
     task_user.unassigned_at = DateTime.current
     if task_user.save
-      flash[:notice] = "#{task_user.task.title} task was unassigned"
+      flash[:notice] = "#{@task.title} task was unassigned"
     else
-      flash[:alert] = "#{task_user.task.errors.full_messages}"
+      flash[:alert] = "#{@task.errors.full_messages}"
     end
     
-    redirect_to tasks_path
+    redirect_to task_path(@task)
   end
   
   # POST /tasks/:id/change_state/:state
@@ -128,7 +128,7 @@ class TasksController < ApplicationController
     task_user = TasksUser.find_by(task_id: task_param, user: current_user, unassigned_at: nil)
     task_user.update(state: state_param)
     
-    flash[:notice] = "State #{state_param}"
+    flash[:notice] = "The state was changed to #{state_param&.humanize}"
     redirect_to task_path(task_param)
   end
   

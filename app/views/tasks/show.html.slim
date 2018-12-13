@@ -1,55 +1,66 @@
 .container-fluid
   .row
     .col-lg-6.offset-lg-3
-      => link_to 'Back', tasks_path
-      
-      p
-        strong Title:
-        '
-        = @data[:task].title
-      p
-        strong Description:
-        '
-        = @data[:task].description
-      p
-        strong File:
-        '
-        - if @data[:task].file_name
-          = link_to @data[:task].file_name, download_task_path(@data[:task])
-          
-      p
-        - if @data[:is_assign]
-          = link_to 'Unassign', unassign_task_path(@data[:task])
-        - else
-          = link_to 'Assign', assign_task_path(@data[:task])
-      
-      - if @data[:is_assign]
-        p
-          strong Show current state:
-          '
-          = @data[:curret_state]
-          
-        p
-          strong States:
-          '
-          = link_to 'New', change_state_tasks_path(@data[:task], 'new'), method: :post
-          '
-          = link_to 'In Progress', change_state_tasks_path(@data[:task], 'in_progress'), method: :post
-          '
-          = link_to 'Finished', change_state_tasks_path(@data[:task], 'finished'), method: :post
-          
-        p
-          '
-          - existing_task_result = TaskResult.find_by(user: @data[:current_user], task: @data[:task])
-          - if existing_task_result.nil?
-            = link_to 'Create new answer', new_task_result_path(task_id: @data[:task].id)
-          - else
-            = link_to 'Edit answer', edit_task_result_path(existing_task_result)
-            = link_to 'Show answer', task_result_path(existing_task_result)
+      .container
+        .row
+          .col.p-0
+            = link_to '<-', tasks_path
             
-      h3
-        | Assigned Users
-        '
+          .col.p-0
+            p.float-right
+              - if @data[:is_assign]
+                = link_to 'Unassign from this task', unassign_task_path(@data[:task])
+              - else
+                = link_to 'Start the task', assign_task_path(@data[:task])
+                
+      .border.border-light.rounded.p-4.mb-4
+        .mb-4
+          h5 Title:
+          = @data[:task].title
+        
+        .mb-4
+          h5 Description:
+          = @data[:task].description
+        
+        .mb-4
+          h5 File:
+          - if @data[:task].file_name
+            = link_to @data[:task].file_name, download_task_path(@data[:task])
+            
+      .border.border-light.rounded.p-4.mb-4
+        - if @data[:is_assign]
+          .mb-4
+            h5 States:
+            - active_class = 'text-white bg-success rounded p-1'
+            - deactive_class = 'text-info'
+            
+            - active_state_new = deactive_class
+            - active_state_in_progress = deactive_class
+            - active_state_finished = deactive_class
+            
+            - case @data[:curret_state]
+            - when 'new'
+              - active_state_new = active_class
+            - when 'in_progress'
+              - active_state_in_progress = active_class
+            - when 'finished'
+              - active_state_finished = active_class
+            
+            = link_to 'New', change_state_tasks_path(@data[:task], 'new'), method: :post, class: "#{active_state_new} mx-2"
+            = link_to 'In Progress', change_state_tasks_path(@data[:task], 'in_progress'), method: :post, class: "#{active_state_in_progress} mx-2"
+            = link_to 'Finished', change_state_tasks_path(@data[:task], 'finished'), method: :post, class: "#{active_state_finished} mx-2"
+            
+          .mb-4
+            h5 Your answer:
+            - existing_task_result = TaskResult.find_by(user: @data[:current_user], task: @data[:task])
+            - if existing_task_result.nil?
+              = link_to 'Create new answer', new_task_result_path(task_id: @data[:task].id)
+            - else
+              = link_to 'Show answer', task_result_path(existing_task_result), class: 'mx-2'
+              span.text-primary |
+              = link_to 'Edit answer', edit_task_result_path(existing_task_result), class: 'mx-2'
+            
+      h4 Assigned Users
       table.table.table-sm.table-striped.table-bordereds
         thead
           tr
@@ -64,4 +75,4 @@
               td = "#{user.last_name} #{user.first_name}"
               td
                 - assigned_task = TasksUser.find_by(user: user, task: @data[:task], unassigned_at: nil)
-                = assigned_task&.state
+                = assigned_task&.state&.humanize
