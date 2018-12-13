@@ -1,14 +1,17 @@
 .container-fluid
   .row
     .col-lg-6.offset-lg-3
-      p
-        strong Description:
-        '
-        = @task_result.description
-      p
-        strong File:
-        '
-        - if @task_result.file_name
-          = link_to @task_result.file_name, download_task_result_path(@task_result)
+      .container
+        .row
+          .col.p-0
+            = link_to '<-', task_path(@task_result.task)
+            
+      .border.border-light.rounded.p-4.mb-4
+        .mb-4
+          h5 Description:
+          = simple_format @task_result.description
           
-      => link_to 'Back', task_results_path
+        .mb-4
+          h5 File:
+          - if @task_result.file_name
+            = link_to @task_result.file_name, download_task_result_path(@task_result)
