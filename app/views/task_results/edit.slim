@@ -2,6 +2,10 @@
   .row
     .col-lg-6.offset-lg-3
       = form_for @task_result do |f|
+        = link_to '<-', task_path(@task_result.task), class: 'mx-2'
+        span.text-primary |
+        = link_to 'To Results', task_results_path, class: 'mx-2'
+        
         - if @task_result.errors.any?
           #error_explanation
             h2 = "#{pluralize(@task_result.errors.count, "error")} prohibited this task result from being saved:"
@@ -17,5 +21,3 @@
           = f.file_field :file
         
         .actions = f.submit
-        
-        => link_to 'Back', task_path(@task_result.task)

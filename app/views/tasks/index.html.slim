@@ -26,8 +26,8 @@
                 - else
                   = task.description
               
-              td
-                - if can? :manage, @tasks
+              - if can? :manage, @tasks
+                td
                   = link_to 'Edit', edit_task_path(task)
                   '
                   = link_to 'Destroy', task, data: { confirm: 'Are you sure?' }, method: :delete

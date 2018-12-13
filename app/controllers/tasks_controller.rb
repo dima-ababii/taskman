@@ -22,7 +22,7 @@ class TasksController < ApplicationController
     current_assignment = TasksUser.find_by(task: @task, user: current_user, unassigned_at: nil)
     
     assignment_user_ids = TasksUser.where(task: @task, unassigned_at: nil).pluck(:user_id)
-    assign_users = User.where(id: assignment_user_ids)
+    assign_users = User.where(id: assignment_user_ids).order(is_active: :desc)
     
     @data = {
       task: @task,
