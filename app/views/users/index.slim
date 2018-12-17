@@ -1,16 +1,41 @@
-h1 Users
-
-table
-  thead
-    th ID
-    th Email
-    th Actions
-  tbody
-    - @users.each do |user|
-      tr
-        td
-          = user.id
-        td
-          = user.email
-        td
-          = link_to 'Show', user
+.container-fluid
+  .row
+    .col-lg-12
+      h2
+        | Users
+        '
+      table.table.table-sm.table-bordereds
+        thead
+          tr
+            th Email
+            th Name
+            th Actions
+            th Tasks
+            
+        tbody
+          - @users.each do |user|
+            - if user.is_active
+              - unactive_user = ''
+            - else
+              - unactive_user = 'bg-warning'
+              
+            tr class="#{unactive_user}"
+              td = user.email
+              td = "#{user.last_name} #{user.first_name}"
+              
+              td
+                = link_to 'Show', user
+                '
+              td
+                - assigned_tasks = TasksUser.where(user: user, unassigned_at: nil).order(unassigned_at: :desc)
+                - assigned_tasks.each do |assigned_task|
+                  .container
+                    .row
+                      .col
+                        = link_to assigned_task.task.title, task_path(assigned_task.task)
+                      .col-s
+                      .col
+                        = assigned_task.state&.humanize
+                  
+      .page-navigation
+        = paginate @users

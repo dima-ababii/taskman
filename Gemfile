@@ -1,12 +1,9 @@
 source 'https://rubygems.org'
 
-ruby '2.3.3'
+ruby '2.5.3'
 
 # Ruby on Rails
-gem 'rails', '5.1.6'
-
-# Turbolinks
-gem 'turbolinks'
+gem 'rails', '5.2'
 
 # Use PostgreSQL as the database for Active Record
 gem 'pg'
@@ -15,10 +12,13 @@ gem 'pg'
 gem 'puma'
 
 # Admin panel
-gem 'activeadmin', '1.3.0'
+gem 'activeadmin'
 
 # Use Devise for AdminUser authentication
 gem 'devise'
+
+# Authorization
+gem 'cancancan'
 
 # Attributes encryption (be carefull with updates)
 gem 'attr_encrypted', '3.1.0'
@@ -27,15 +27,15 @@ gem 'attr_encrypted', '3.1.0'
 gem 'kaminari'
 
 # CSS
-gem 'bootstrap-sass'
-gem 'sass-rails'
+gem 'bootstrap'
+# gem 'bootstrap-sass'
 
 # JavaScript
-gem 'coffee-rails' # use CoffeeScript
 gem 'jquery-rails' # main JS library
 gem 'jquery-ui-rails' # jQuery UI
 gem 'uglifier' # compressor
 gem 'typedjq-rails' # typewriter based on JQuery library
+gem 'chosen-rails' # Form selecter
 
 # HTML template engine
 gem 'slim-rails'

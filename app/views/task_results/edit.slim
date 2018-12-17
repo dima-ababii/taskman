@@ -1,0 +1,24 @@
+.container-fluid
+  .row
+    .col-lg-6.offset-lg-3
+      = form_for @task_result do |f|
+        = link_to '<-', task_path(@task_result.task), class: 'mx-2'
+        - if can? :manage, @task_result
+          span.text-primary |
+          = link_to 'To Results', task_results_path, class: 'mx-2'
+        
+        - if @task_result.errors.any?
+          #error_explanation
+            h2 = "#{pluralize(@task_result.errors.count, "error")} prohibited this task result from being saved:"
+            ul
+              - @task_result.errors.full_messages.each do |message|
+                li = message
+                
+        .form-group
+          = f.label :description
+          = f.text_area :description, { class: 'form-control' }
+          
+        .form-group
+          = f.file_field :file
+        
+        .actions = f.submit

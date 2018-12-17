@@ -1,0 +1,20 @@
+.navbar.sticky-top.navbar-expand-md.navbar-dark.bg-dark
+  = link_to 'Taskman', root_path, class: 'navbar-brand'
+  
+  button.navbar-toggler type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+    span.navbar-toggler-icon
+    
+  .collapse.navbar-collapse#navbarSupportedContent
+    - if user_signed_in?
+      ul.navbar-nav.mr-auto
+        li.nav-item
+          = link_to 'Tasks', tasks_path, class: 'nav-link'
+        - if current_user.role == 'teacher'
+          li.nav-item
+            = link_to 'Users', users_path, class: 'nav-link'
+          li.nav-item
+            = link_to 'Results', task_results_path, class: 'nav-link'
+        - else
+          li.nav-item
+            = link_to 'Current User', users_path, class: 'nav-link'
+      = link_to 'Log Out', destroy_user_session_path, method: :delete

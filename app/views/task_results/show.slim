@@ -1,0 +1,20 @@
+.container-fluid
+  .row
+    .col-lg-6.offset-lg-3
+      .container
+        .row
+          .col.p-0
+            = link_to '<-', task_path(@task_result.task), class: 'mx-2'
+            - if can? :manage, @task_result
+              span.text-primary |
+              = link_to 'To Results', task_results_path, class: 'mx-2'
+            
+      .border.border-light.rounded.p-4.mb-4
+        .mb-4
+          h5 Description:
+          = simple_format @task_result.description
+          
+        .mb-4
+          h5 File:
+          - if @task_result.file_name
+            = link_to @task_result.file_name, download_task_result_path(@task_result)

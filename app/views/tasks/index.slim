@@ -1,0 +1,39 @@
+.container-fluid
+  .row
+    .col-lg-12
+      h2
+        | Tasks
+        '
+        = link_to 'new', new_task_path if can? :create, @tasks
+        
+      table.table.table-sm.table-striped.table-bordereds
+        thead
+          tr
+            th Title
+            th Description
+            - if can? :manage, @tasks
+              th Actions
+            
+            th Expiration Date
+            
+        tbody
+          - @tasks.each do |task|
+            tr
+              td = link_to task.title, task
+              td
+                - if task.description && task.description.length > 40
+                  = task.description[0..40] + '...'
+                - else
+                  = task.description
+              
+              - if can? :manage, @tasks
+                td
+                  = link_to 'Edit', edit_task_path(task)
+                  '
+                  = link_to 'Destroy', task, data: { confirm: 'Are you sure?' }, method: :delete
+                  
+              td
+                = task.expiration_date
+                  
+      .page-navigation
+        = paginate @tasks
