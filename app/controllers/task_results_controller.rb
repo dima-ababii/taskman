@@ -34,17 +34,19 @@ class TaskResultsController < ApplicationController
   
   # POST /task_results/:task_id
   def create
-    @task_result = TaskResult.new(task_result_params)
     task = Task.find_by(id: params[:task_id])
     
     if task.nil?
-      # error
+      flash[:alert] = "You try to create Answer for Task that do not exists"
+      redirect_to tasks_path
+      return
     end
     
+    @task_result = TaskResult.new(task_result_params)
     @task_result.task = task
     @task_result.user = current_user
     if @task_result.save
-      redirect_to tasks_path(params[:task_id])
+      redirect_to task_path(params[:task_id])
     else
       render 'new', task_id: params[:task_id]
     end
