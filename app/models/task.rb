@@ -22,6 +22,6 @@ class Task < ApplicationRecord
   
   private
     def expiration_date_is_possible_to_set
-      errors.add(:expiration_date, 'can not be set with that date') if Date.current > self.expiration_date
+      errors.add(:expiration_date, 'can not be set with that date') if expiration_date && Date.current > expiration_date
     end
 end
