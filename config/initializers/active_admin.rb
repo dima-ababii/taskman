@@ -5,6 +5,9 @@ ActiveAdmin.setup do |config|
   # for each of the active admin pages.
   #
   config.site_title = "Taskman"
+  
+  # Skip authentication for regular Users
+  config.skip_before_action :authenticate_user!
 
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.

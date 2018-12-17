@@ -24,10 +24,13 @@
               td
                 - assigned_tasks = TasksUser.where(user: user, unassigned_at: nil).order(unassigned_at: :desc)
                 - assigned_tasks.each do |assigned_task|
-                  = link_to assigned_task.task.title, task_path(assigned_task.task)
-                  '
-                  = assigned_task.state
-                  br
+                  .container
+                    .row
+                      .col
+                        = link_to assigned_task.task.title, task_path(assigned_task.task)
+                      .col-s
+                      .col
+                        = assigned_task.state&.humanize
                   
       .page-navigation
         = paginate @users
