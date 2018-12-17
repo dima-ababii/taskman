@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :task_result do
-    file { "MyString" }
-    file_hex { "MyString" }
-    description { "MyText" }
+    file { Faker::Lorem.characters(10) }
+    file_hex { Faker::Lorem.characters(10) }
+    description { Faker::Lorem.characters(10) }
   end
 end

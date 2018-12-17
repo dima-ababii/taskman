@@ -28,7 +28,7 @@ gem 'kaminari'
 
 # CSS
 gem 'bootstrap'
-gem 'bootstrap-sass'
+# gem 'bootstrap-sass'
 
 # JavaScript
 gem 'jquery-rails' # main JS library
