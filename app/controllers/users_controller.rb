@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     end
     
     if current_user.role == 'teacher'
-      users = User.all
+      users = User.all.order(is_active: :desc)
     else
       users = User.where(id: current_user.id)
     end
@@ -27,18 +27,14 @@ class UsersController < ApplicationController
   def activation
     user = User.find(params[:id])
     
-    if user && user != current_user
-      flash[:alert] = "Permission denied"
-      redirect_to user_path(user)
-    end
-    
     if user.is_active
       user.update_columns(is_active: false)
-      flash[:notice] = "Your account is deactivated"
+      flash[:notice] = "Account is deactivated"
     else
       user.update_columns(is_active: true)
-      flash[:notice] = "Your account is activated"
+      flash[:notice] = "Account is activated"
     end
+    
     redirect_to user_path(user)
   end
 end

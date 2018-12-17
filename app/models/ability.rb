@@ -7,7 +7,7 @@ class Ability
     
     if user.role == 'student'
       can :read, Task
-      can :read, User, id: user.id
+      can :manage, User, id: user.id
     end
   end
 end

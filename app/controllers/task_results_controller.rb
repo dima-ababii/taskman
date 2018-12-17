@@ -1,5 +1,7 @@
 class TaskResultsController < ApplicationController
   # Authorization
+  load_and_authorize_resource
+  skip_authorize_resource only: [:show, :new, :edit, :create, :update, :download]
   
   # Set Task
   before_action :set_task_result, only: [:show, :edit, :update, :destroy, :download]

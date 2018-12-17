@@ -27,8 +27,8 @@
           - if @data[:task].file_name
             = link_to @data[:task].file_name, download_task_path(@data[:task])
             
-      .border.border-light.rounded.p-4.mb-4
-        - if @data[:is_assign]
+      - if @data[:is_assign]
+        .border.border-light.rounded.p-4.mb-4
           .mb-4
             h5 States:
             - active_class = 'text-white bg-success rounded p-1'
@@ -59,25 +59,26 @@
               = link_to 'Show answer', task_result_path(existing_task_result), class: 'mx-2'
               span.text-primary |
               = link_to 'Edit answer', edit_task_result_path(existing_task_result), class: 'mx-2'
-            
-      h4 Assigned Users
-      table.table.table-sm.table-bordereds
-        thead
-          tr
-            th Email
-            th Name
-            th State
-            
-        tbody
-          - @data[:assign_users].each do |user|
-            - if user.is_active
-              - unactive_user = ''
-            - else
-              - unactive_user = 'bg-light'
-            
-            tr class="#{unactive_user}"
-              td = link_to user.email, user_path(user), class: 'text-info'
-              td = "#{user.last_name} #{user.first_name}"
-              td
-                - assigned_task = TasksUser.find_by(user: user, task: @data[:task], unassigned_at: nil)
-                = assigned_task&.state&.humanize
+      
+      - if can? :manage, @data[:task]
+        h4 Assigned Users
+        table.table.table-sm.table-bordereds
+          thead
+            tr
+              th Email
+              th Name
+              th State
+              
+          tbody
+            - @data[:assign_users].each do |user|
+              - if user.is_active
+                - unactive_user = ''
+              - else
+                - unactive_user = 'bg-warning'
+              
+              tr class="#{unactive_user}"
+                td = link_to user.email, user_path(user), class: 'text-info'
+                td = "#{user.last_name} #{user.first_name}"
+                td
+                  - assigned_task = TasksUser.find_by(user: user, task: @data[:task], unassigned_at: nil)
+                  = assigned_task&.state&.humanize
